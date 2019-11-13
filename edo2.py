@@ -51,16 +51,17 @@ def edo2(p, q, f, h, a, b, y0, yn):
 
 if __name__ == '__main__':
     print('Finite Difference method working, put your code below')
-    p = lambda x: -1/x
-    q = lambda x: 1/(4*x**2) - 1
-    f = lambda x: 0*x
+    # Example, uncomment to see
+    # p = lambda x: -1/x
+    # q = lambda x: 1/(4*x**2) - 1
+    # f = lambda x: 0*x
 
-    h = 0.1
-    a = 1
-    b = 6
-    y0 = 1
-    yn = 0
+    # h = 0.1
+    # a = 1
+    # b = 6
+    # y0 = 1
+    # yn = 0
 
-    xAprox, yAprox = edo2(p, q, f, h, a, b, y0, yn)
-    print(xAprox)
-    print(yAprox)
+    # xAprox, yAprox = edo2(p, q, f, h, a, b, y0, yn)
+    # print(xAprox)
+    # print(yAprox)
