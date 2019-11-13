@@ -9,3 +9,4 @@ def thomas(A, b):
 
 if __name__ == '__main__':
     print('Thomas method working, put your code below')
+    # Example, uncomment to see
