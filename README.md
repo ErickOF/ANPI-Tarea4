@@ -5,10 +5,6 @@ Computer Engineering
 
 **Semester:** II - 2019  
 
-**Total Score:** 100 points  
-
-**Percentage Value:** 7 %
-
 ## **Assignment 4**
 
 ### **Numerical Solution of a Differential Equation**
