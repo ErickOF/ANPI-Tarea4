@@ -1,5 +1,3 @@
-# ANPI-Tarea4
-
 # **Instituto Tecnológico de Costa Rica**
 CE3102: Numerical Analysis for Engineering
 
