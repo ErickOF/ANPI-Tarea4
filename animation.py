@@ -111,7 +111,9 @@ if __name__ == "__main__":
     # Compute the numerical solutions with different step sizes
     for i in range(1, 4):
         h: int = 10**-i
+
         xAprox, yAprox = edo2(p, q, f, h, a, b, y0, yn)
+
         legends.append('Aprox h={}'.format(h))
         x.append(xAprox)
         y.append(yAprox)
