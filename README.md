@@ -25,13 +25,13 @@ where $p(x)$, $q(x)$, $f(x)$ are continuous functions of real variable. We defin
 
 #### **Questions**
 
-1. **[Value: 20 points]** Implement a function named `thomas` that solves a linear system of the form $Az = b$, where $A$ is an invertible tridiagonal matrix of size $m \times m$ and $b, z$ are column vectors of size $m$. The function receives the matrix $A$ and the vector $b$ as input parameters, and the output parameter is the vector $z$ that solves the system $Az = b$.
+1. Implement a function named `thomas` that solves a linear system of the form $Az = b$, where $A$ is an invertible tridiagonal matrix of size $m \times m$ and $b, z$ are column vectors of size $m$. The function receives the matrix $A$ and the vector $b$ as input parameters, and the output parameter is the vector $z$ that solves the system $Az = b$.
 
-2. **[Value: 60 points]** Implement the finite difference method that solves Problem A. To do this, create a function named `edo2`, whose initial parameters are the functions $p$, $q$, and $f$, the step size $h$, the values $a$, $b$ of the interval, and the initial values $y_{0}$, $y_{n}$. The output parameters are the vectors $x = [x_0, x_1, ..., x_n]^T$ and $y = [y_0, y_1, ..., y_n]^T$.  
+2. Implement the finite difference method that solves Problem A. To do this, create a function named `edo2`, whose initial parameters are the functions $p$, $q$, and $f$, the step size $h$, the values $a$, $b$ of the interval, and the initial values $y_{0}$, $y_{n}$. The output parameters are the vectors $x = [x_0, x_1, ..., x_n]^T$ and $y = [y_0, y_1, ..., y_n]^T$.  
 
    **Note:** The function `edo2` needs to solve a system of linear equations whose coefficient matrix is a tridiagonal matrix. To solve this system, use the `thomas` function implemented in Question 1.
 
-3. **[Value: 20 points]** Implement a script to approximate the solution of the problem
+3. Implement a script to approximate the solution of the problem
 
 $$
 \begin{cases}
