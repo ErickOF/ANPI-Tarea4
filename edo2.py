@@ -1,67 +1,120 @@
-# -*- coding: utf-8 -*-
 import numpy as np
-from thomas import *
+
+from typing import Callable, Tuple
+
+from thomas import thomas
 
 
-def edo2(p, q, f, h, a, b, y0, yn):
+def edo2(
+    p: Callable[[float], float],
+    q: Callable[[float], float],
+    f: Callable[[float], float],
+    h: float,
+    a: float,
+    b: float,
+    y0: float,
+    yn: float
+) -> Tuple[np.ndarray, np.ndarray]:
     """
-    Inputs
+    Solves a second-order differential equation using the finite difference
+    method.
+
+    This function uses the finite difference method to solve a boundary value
+    problem of a second-order differential equation of the form:
     
-    @p - function p
-
-    @q - function q
-
-    @f - function f
-
-    @h - step
-
-    @a - initial value
-
-    @b - final value
+        y'' + p(x)y' + q(x)y = f(x),
     
-    @y0 - initial value y(a)
+    on the interval [a, b] with boundary conditions y(a) = y0 and y(b) = yn.
+    The interval is discretized into steps of size h.
 
-    @yn - end value y(b)
+    Parameters
+    ----------
+    p : Callable[[float], float]
+        A function representing the coefficient of y' in the differential
+        equation.
+    q : Callable[[float], float]
+        A function representing the coefficient of y in the differential
+        equation.
+    f : Callable[[float], float]
+        A function representing the non-homogeneous part of the differential
+        equation.
+    h : float
+        Step size for the finite difference discretization.
+    a : float
+        The initial value of the interval (start point).
+    b : float
+        The final value of the interval (end point).
+    y0 : float
+        The boundary value at the initial point, y(a).
+    yn : float
+        The boundary value at the final point, y(b).
 
-    Outputs
-    @x - vector x
-    
-    @y - vector y
+    Returns
+    -------
+    Tuple[np.ndarray, np.ndarray]
+        x : np.ndarray
+            The vector of discretized points in the interval [a, b].
+        y : np.ndarray
+            The vector of approximate solutions at the discretized points.
+
+    Notes
+    -----
+    - The interval [a, b] is discretized into points with a step size of h.
+    - The method creates a tridiagonal system of equations that is solved
+      using the Thomas algorithm.
     """
-    x = np.arange(a, b, h)
-    # Create Linear System Equation Ax = v
-    # Compute diagonals values
-    diagonal0 = 2 + q(x[1:-1])*h**2
-    diagonal_1 = -p(x[2:-1])*h/2 - 1
-    diagonal1 = p(x[1:-2])*h/2 - 1
-    # Tridiagonal matriz
-    A = np.diag(diagonal_1, -1) + np.diag(diagonal0, 0) + np.diag(diagonal1, 1)
-    # Constants
+    # Create a vector of discretized points in the interval [a, b]
+    x: np.ndarray = np.arange(a, b, h)
+
+    # Create the linear system Ax = v for the finite difference method
+    # Compute the values for the diagonals of the tridiagonal matrix A
+    diagonal0: np.ndarray = 2 + q(x[1:-1]) * h**2
+    diagonal_1: np.ndarray = -p(x[2:-1]) * h / 2 - 1
+    diagonal1: np.ndarray = p(x[1:-2]) * h / 2 - 1
+
+    # Construct the tridiagonal matrix A using the diagonals
+    A: np.ndarray = np.diag(diagonal_1, -1) + np.diag(diagonal0, 0) +\
+        np.diag(diagonal1, 1)
+
+    # Constants for boundary conditions
     # y0 = alpha, yn = beta
-    e0 = (p(x[1])*h/2 + 1)*y0
-    eN = (-p(x[-2])*h/2 + 1)*yn
-    # Vector
-    v = -f(x[1:-1])*h**2
+    e0: np.ndarray = (p(x[1]) * h / 2 + 1) * y0
+    eN: np.ndarray = (-p(x[-2]) * h / 2 + 1) * yn
+
+    # Construct the right-hand side vector v
+    v: np.ndarray = -f(x[1:-1]) * h**2
+    # Adjust the first element for the boundary condition at a
     v[0] += e0
+    # Adjust the last element for the boundary condition at b
     v[-1] += eN
-    # Solving Linear System Equation
-    y = thomas(A, v)
+
+    # Solve the linear system using the Thomas algorithm
+    y: np.ndarray = thomas(A, v)
+
+    # Append the boundary values to the solution vector
     y = np.append(np.append(y0, y), yn)
+
     return x, y
 
 if __name__ == '__main__':
-    print('Finite Difference method working, put your code below')
-    # Example, uncomment to see
-    # p = lambda x: -1/x
-    # q = lambda x: 1/(4*x**2) - 1
-    # f = lambda x: 0*x
+    print('Finite Difference')
 
-    # h = 0.1
-    # a = 1
-    # b = 6
-    # y0 = 1
-    # yn = 0
+    # Example usage
+    # Define the coefficient functions and boundary conditions
+    p: Callable[[float], float] = lambda x: -1 / x
+    q: Callable[[float], float] = lambda x: 1 / (4 * x**2) - 1
+    # Homogeneous part of the equation
+    f: Callable[[float], float] = lambda x: 0 * x
 
-    # xAprox, yAprox = edo2(p, q, f, h, a, b, y0, yn)
-    # print(xAprox)
-    # print(yAprox)
+    # Define the interval, step size, and boundary conditions
+    h: float = 0.1
+    a: float = 1.0
+    b: float = 6.0
+    y0: float = 1.0
+    yn: float = 0.0
+
+    # Compute the approximate solution using the finite difference method
+    xAprox, yAprox = edo2(p, q, f, h, a, b, y0, yn)
+
+    print(xAprox)
+    print(yAprox)
